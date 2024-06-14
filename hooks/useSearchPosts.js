@@ -29,8 +29,8 @@ const useSearchPosts = (initialSearchText = '') => {
       const newTimeout = setTimeout(() => {
         fetchSearchPosts()
       }, 1000)
-
       setTimeoutId(newTimeout)
+      console.log('set!', newTimeout)
       return () => clearTimeout(newTimeout)
     } else {
       fetchPosts()
@@ -44,6 +44,7 @@ const useSearchPosts = (initialSearchText = '') => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    console.log('clear by submit', timeoutId)
     clearTimeout(timeoutId)
     fetchSearchPosts()
   }
@@ -51,9 +52,11 @@ const useSearchPosts = (initialSearchText = '') => {
   const handleTagClick = tag => {
     setSearchText(tag)
     // 立即触发类型，清除定时器
-    clearTimeout(timeoutId)
-    // 手动触发搜索
-    fetchSearchPosts()
+    setTimeout(() => {
+      console.log('clear by tag', timeoutId)
+      clearTimeout(timeoutId)
+      fetchSearchPosts()
+    }, 0)
   }
 
   return {
