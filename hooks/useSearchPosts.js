@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const useSearchPosts = (initialSearchText = '') => {
   const [searchText, setSearchText] = useState(initialSearchText)
   const [posts, setPosts] = useState([])
-  const [timeoutId, setTimeoutId] = useState(null)
+  const timeoutId = useRef(null)
 
   // 获取所有 prompt
   const fetchPosts = async () => {
@@ -13,8 +13,8 @@ const useSearchPosts = (initialSearchText = '') => {
   }
 
   // 根据搜索关键词获取 prompt
-  const fetchSearchPosts = async () => {
-    const response = await fetch('/api/prompt/search?searchText=' + searchText)
+  const fetchSearchPosts = async search => {
+    const response = await fetch('/api/prompt/search?searchText=' + search)
     const data = await response.json()
     setPosts(data)
   }
@@ -27,14 +27,14 @@ const useSearchPosts = (initialSearchText = '') => {
   useEffect(() => {
     if (searchText.trim()) {
       const newTimeout = setTimeout(() => {
-        fetchSearchPosts()
+        fetchSearchPosts(searchText)
       }, 1000)
-      setTimeoutId(newTimeout)
+      timeoutId.current = newTimeout
       console.log('set!', newTimeout)
       return () => clearTimeout(newTimeout)
     } else {
       fetchPosts()
-      return () => clearTimeout(timeoutId)
+      return () => clearTimeout(timeoutId.current)
     }
   }, [searchText])
 
@@ -44,19 +44,19 @@ const useSearchPosts = (initialSearchText = '') => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('clear by submit', timeoutId)
-    clearTimeout(timeoutId)
-    fetchSearchPosts()
+    console.log('clear by submit', timeoutId.current)
+    clearTimeout(timeoutId.current)
+    fetchSearchPosts(searchText)
   }
 
   const handleTagClick = tag => {
     setSearchText(tag)
-    // 立即触发类型，清除定时器
+    // 需要等待searchText更新完毕，再清除副作用带来的定时器
     setTimeout(() => {
-      console.log('clear by tag', timeoutId)
-      clearTimeout(timeoutId)
-      fetchSearchPosts()
+      console.log('clear by tag', timeoutId.current)
+      clearTimeout(timeoutId.current)
     }, 0)
+    fetchSearchPosts(tag) // 立即执行搜索
   }
 
   return {
