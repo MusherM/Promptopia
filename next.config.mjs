@@ -3,7 +3,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const subBasePath = '/Promptopia'
 const subAssetPrefix = subBasePath + '/'
 const nextConfig = {
-  output: 'export',
+  // output: 'export',
   basePath: isProd ? subBasePath : '',
   assetPrefix: isProd ? subAssetPrefix : '',
   publicRuntimeConfig: {
@@ -14,7 +14,8 @@ const nextConfig = {
     serverComponentsExternalPackages: ['mongoose']
   },
   images: {
-    domains: ['lh3.googleusercontent.com']
+    domains: ['lh3.googleusercontent.com'],
+    unoptimized: true
   }
 }
 
