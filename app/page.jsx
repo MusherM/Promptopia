@@ -23,4 +23,10 @@ const Home = () => {
   )
 }
 
+export const metadata = {
+  icons: {
+    icon: '/favicon.svg' // /public path
+  }
+}
+
 export default Home
