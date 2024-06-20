@@ -11,7 +11,8 @@ const nextConfig = {
     assetPrefix: isProd ? subAssetPrefix : ''
   },
   experimental: {
-    serverComponentsExternalPackages: ['mongoose']
+    serverComponentsExternalPackages: ['mongoose'],
+    missingSuspenseWithCSRBailout: false
   },
   images: {
     domains: ['lh3.googleusercontent.com'],
