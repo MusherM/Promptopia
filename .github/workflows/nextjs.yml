@@ -61,6 +61,15 @@ jobs:
       # 编译
       - name: Build with Next.js
         run: npm run build
+        env:
+          NODE_ENV: production
+          GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
+          NEXTAUTH_URL_INTERNAL: ${{secrets.NEXTAUTH_URL_INTERNAL}}
+          NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
+
       # 上传工作 Build 完的静态文件会存放在 out 文件夹，在 next.config.js 中配置 output: 'export'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
