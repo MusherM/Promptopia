@@ -3,6 +3,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const subBasePath = '/Promptopia'
 const subAssetPrefix = subBasePath + '/'
 const nextConfig = {
+  output: 'export',
   basePath: isProd ? subBasePath : '',
   assetPrefix: isProd ? subAssetPrefix : '',
   publicRuntimeConfig: {
