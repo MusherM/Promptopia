@@ -28,7 +28,7 @@ const useSearchPosts = (initialSearchText = '') => {
     if (searchText.trim()) {
       const newTimeout = setTimeout(() => {
         fetchSearchPosts(searchText)
-      }, 1000)
+      }, 500)
       timeoutId.current = newTimeout
       console.log('set!', newTimeout)
       return () => clearTimeout(newTimeout)

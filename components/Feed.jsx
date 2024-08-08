@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import PromptCard from './PromptCard'
 import basePathContext from '@/context/basePathContext'
 import useSearchPosts from '@/hooks/useSearchPosts'
